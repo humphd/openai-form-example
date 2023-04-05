@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My Study Helper</title>
+    <!-- Use Bootstrap for our CSS styles, see https://getbootstrap.com/docs/5.3/getting-started/introduction/ -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <main class="container">
+      <!-- Split this part of the page in half, form on left, output on right-->
+      <div class="container">
+        <header class="row mb-3 border-bottom">
+          <h1 class="mt-4">My Study Helper</h1>
+          <p>
+            <em>Enter your learning requirements and have AI generate questions for you.</em>
+          </p>
+        </header>
+
+        <!-- Split the remaining space in half: left for input form, right for AI output -->
+        <div class="row">
+          <section id="input" class="col">
+            <h2 class="mb-4">Question Parameters</h2>
+
+            <!-- Use an action URL of #, meaning, "stay on this page vs post to another" -->
+            <form action="#" method="post" id="input-form">
+              <div class="mb-3">
+                <label
+                  for="topic"
+                  class="form-label w-100 d-flex justify-content-between"
+                >
+                  Topic
+                  <span class="badge text-bg-light" id="topic-badge"></span>
+                </label>
+                <textarea
+                  class="form-control"
+                  id="topic"
+                  name="topic"
+                  rows="10"
+                  maxlength="5000"
+                  placeholder="Enter info about your desired topic, or copy/paste notes"
+                ></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label for="level" class="form-label">
+                  Learner Level (Beginner to Expert)
+                </label>
+                <input
+                  type="range"
+                  class="form-range"
+                  id="level"
+                  name="level"
+                  min="1"
+                  max="10"
+                  value="3"
+                />
+              </div>
+
+              <div class="mb-3">
+                <label for="question-count" class="form-label">
+                  Question Count
+                </label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="question-count"
+                  name="question-count"
+                  min="1"
+                  max="10"
+                  value="3"
+                />
+              </div>
+
+              <div class="mb-3">
+                <div>
+                  <label class="form-label">Question Type</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="question-type"
+                    value="True/False"
+                    id="type-tf"
+                    checked
+                  />
+                  <label class="form-check-label" for="type-tf">
+                    True/False
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="question-type"
+                    value="Multiple Choice"
+                    id="type-mc"
+                  />
+                  <label class="form-check-label" for="type-mc">
+                    Multiple Choice
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="question-type"
+                    value="Short Answer"
+                    id="type-short"
+                  />
+                  <label class="form-check-label" for="type-short">
+                    Short Answer
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="question-type"
+                    value="Fill in the Blank"
+                    id="type-fill"
+                  />
+                  <label class="form-check-label" for="type-fill">
+                    Fill in the Blank
+                  </label>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="include-answers"
+                />
+                <label class="form-check-label" for="include-answers">
+                  Include Answers
+                </label>
+              </div>
+
+              <div class="text-end">
+                <button type="submit" class="btn btn-primary">
+                  <!-- Spinner Icon -->
+                  <span
+                    class="submit-button-spinner spinner-border spinner-border-sm"
+                    hidden
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="submit-button-text">Submit</span>
+                </button>
+              </div>
+            </form>
+          </section>
+
+          <section class="col">
+            <h2>AI Output</h2>
+            <div id="output">
+              <!-- Empty, because we'll populate this with AI generated text -->
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- Include Bootstrap's code and our own app.js -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+      crossorigin="anonymous"
+    ></script>
+    <!-- We are including our code as a JavaScript Module because we need to load
+         various dependencies.  See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules -->
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>

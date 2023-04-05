@@ -1,0 +1,17 @@
+{
+  "name": "openai-form",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "parcel src/index.html",
+    "dev": "npm run start",
+    "build": "parcel build index.html"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "openai": "^3.2.1",
+    "parcel": "^2.8.3"
+  },
+  "devDependencies": {
+    "process": "^0.11.10"
+  }
+}
