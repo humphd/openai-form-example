@@ -3,22 +3,7 @@
 // For this to work, we have to "bundle" our JavaScript code together
 // with the OpenAI code, and any code it needs.  We'll do that using
 // https://parceljs.org/
-const { OpenAIApi, Configuration } = require('openai');
-
-
-// You need an OpenAI account and Secret API Key for this to work, see:
-// https://help.openai.com/en/articles/4936850-where-do-i-find-my-secret-api-key
-// Get the API Key from the .env file via `process.env.OPENAI_API_KEY` variable
-// See https://parceljs.org/features/node-emulation/#.env-files
-function configureOpenAI() {
-  const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
-
-  // Create a client with our account config and return it
-  const openai = new OpenAIApi(configuration);
-  return openai;
-}
+import OpenAI from 'openai';
 
 // Translate our user's form input into a ChatGPT prompt format
 function buildUserPrompt(topic, level, questionCount, questionType, includeAnswers) {
@@ -47,8 +32,11 @@ You must format your response using Bootstrap HTML in the following form, adding
 // is needed on any function that needs to run asynchronous calls and `await`.
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
 async function chat(topic, level, questionCount, questionType, includeAnswers) {
-  // Setup the openai client
-  const openai = configureOpenAI();
+  // You need an OpenAI account and Secret API Key for this to work, see:
+  // https://help.openai.com/en/articles/4936850-where-do-i-find-my-secret-api-key
+  // Get the API Key from the .env file via `process.env.OPENAI_API_KEY` variable
+  // See https://parceljs.org/features/node-emulation/#.env-files
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY,  dangerouslyAllowBrowser: true });
 
   // Define our list of messages to send in our "chat", see:
   // https://platform.openai.com/docs/guides/chat
@@ -69,14 +57,14 @@ async function chat(topic, level, questionCount, questionType, includeAnswers) {
   // Any network request could fail, so we use try/catch
   try {
     // Send our messages to OpenAI, and `await` the response (it will take time)
-    const completion = await openai.createChatCompletion({
+    const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: messages,
     });
 
     // The response we get back will be a complex object, and we want to drill in
     // to get our data, see https://platform.openai.com/docs/guides/chat/response-format
-    const answer = completion.data.choices[0].message.content;
+    const answer = completion.choices[0].message.content;
     console.log({ answer });
 
     displayOutput(answer);
@@ -103,7 +91,6 @@ function toggleSubmitButton() {
 
   // Flip the button's text back to "Loading..."" or "Submit"
   const submitButtonText = submitButton.querySelector('.submit-button-text');
-  debugger;
   if(submitButtonText.innerHTML === 'Loading...') {
     submitButtonText.innerHTML = 'Submit';
   } else {
